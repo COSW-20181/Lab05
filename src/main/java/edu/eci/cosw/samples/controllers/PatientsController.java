@@ -19,6 +19,7 @@ package edu.eci.cosw.samples.controllers;
 import edu.eci.cosw.jpa.sample.model.Paciente;
 import edu.eci.cosw.samples.services.PatientServices;
 import edu.eci.cosw.samples.services.ServicesException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,17 @@ public class PatientsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);            
         }         
         
+    }
+    
+    @RequestMapping(path = "/pacientesConsulta",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> getPacientesByConsulta() {
+        try {
+            return new ResponseEntity<>(services.topPatients(10),HttpStatus.ACCEPTED);
+        } catch (ServicesException ex) {
+            Logger.getLogger(PatientsController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
 }
